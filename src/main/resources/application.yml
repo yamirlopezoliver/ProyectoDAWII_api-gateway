@@ -1,0 +1,29 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: categoria-service
+              uri: lb://categoria-service
+              predicates:
+                - Path=/api/categorias/**
+            - id: producto-service
+              uri: lb://producto-service
+              predicates:
+                - Path=/api/productos/**
+            - id: cliente-service
+              uri: lb://cliente-service
+              predicates:
+                - Path=/api/clientes/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8762/eureka
+  instance:
+    prefer-ip-address: true
